@@ -31,8 +31,7 @@ with driver.session() as session:
 
 index = 0
 list_nodes = [(k, v) for k, v in d_centrality.items()][index:NEO4J_CHUNK]
-list_nodes[0]
-list_nodes[-1]
+
 while len(list_nodes) > 0:
     with driver.session() as session:
         session.write_transaction(set_centrality_value, list_nodes)
