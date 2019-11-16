@@ -1,31 +1,37 @@
-from tweepy import Cursor, TweepError
-import pandas as pd
-import time
-
-### put api here
+from tweepy import Cursor
+from collections import Counter
+import logging
 
 
+def get_mentions_of_user(starting_account, bf_lim=10, tweet_lim=100):
+    user_friends = get_mentions(starting_account, tweet_lim)
 
-def get_mentions_of_user(starting_account, api):
-    db = {starting_account : None}
-    accounts_to_crawl = [starting_account]
-    acc_counter = 0
-    for account in accounts_to_crawl:
-        account_mentions = []
-        acc_counter += 1
-        if acc_counter > 11:
-            break
-        try:
-            for status in Cursor(api.user_timeline, id=account).items(100):
-                if "user_mentions" in status.entities:
-                    for mention in status.entities["user_mentions"]:
-                        account_mentions.append(mention["screen_name"])
-            account_mentions = pd.Series(account_mentions).value_counts()
-            account_mentions = list(account_mentions.index)
-            db[account] = account_mentions
-            accounts_to_crawl.extend(account_mentions[:10])
-        except TweepError:
-            time.sleep(5)
-            print('boom')
-            continue
-    return db
+    mentions_dict = {starting_account: list(set(user_friends))}
+    logging.warning(mentions_dict)
+
+    mentions_counter = Counter(user_friends)
+    top_ten_friends = mentions_counter.most_common(bf_lim)
+    logging.warning(f'{top_ten_friends}')
+    for user_name, _ in top_ten_friends:
+        account_mentions = get_mentions(user_name, tweet_lim)
+        mentions_dict[user_name] = list(set(account_mentions))
+
+    return mentions_dict
+
+
+def get_mentions(user_name, tweet_lim):
+    user_friends = []
+    for tweet in Cursor(api.user_timeline, id=user_name).items(tweet_lim):
+        # if "user_mentions" in status.entities.keys():
+        user_friends.extend([user["screen_name"] for user in tweet.entities["user_mentions"]])
+    return user_friends
+
+
+if __name__ == "__main__":
+    from extractor import auth
+    import json
+
+    api = auth()
+    mentions = get_mentions_of_user("kamilgorzynski", tweet_lim=100, bf_lim=10)
+    with open("mentions.json", "w") as f:
+        json.dump(mentions, f, ensure_ascii=False, indent=4)

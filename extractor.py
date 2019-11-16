@@ -2,13 +2,18 @@ import tweepy as tw
 import json
 import logging
 
-with open('creds.json') as creds:
-    credentials = json.load(creds)
 
-auth = tw.auth.OAuthHandler(credentials["consumer_key"], credentials["consumer_secret"])
-auth.set_access_token(credentials["access_token"], credentials["access_secret"])
+def auth():
+    with open('creds.json') as creds:
+        credentials = json.load(creds)
 
-api = tw.API(auth, wait_on_rate_limit=True)
+    auth = tw.auth.OAuthHandler(credentials["consumer_key"], credentials["consumer_secret"])
+    auth.set_access_token(credentials["access_token"], credentials["access_secret"])
+    api = tw.API(auth, wait_on_rate_limit=True)
+    return api
+
+
+api = auth()
 
 
 def get_random_users(geocode="40.68908,-73.95860,200km", n=100, lang="en", date_since="2018-10-15"):
