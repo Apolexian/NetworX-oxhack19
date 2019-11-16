@@ -197,3 +197,4 @@ user_followers.json
 .python_packages
 .vscode/
 mentions.json
+scrape/

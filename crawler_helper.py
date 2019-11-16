@@ -3,8 +3,8 @@ from collections import Counter
 import logging
 
 
-def get_mentions_of_user(starting_account, bf_lim=10, tweet_lim=100):
-    user_friends = get_mentions(starting_account, tweet_lim)
+def scrape_user(api, starting_account, bf_lim=10, tweet_lim=100):
+    user_friends = get_mentions(api, starting_account, tweet_lim)
 
     mentions_dict = {starting_account: list(set(user_friends))}
     logging.warning(mentions_dict)
@@ -13,13 +13,13 @@ def get_mentions_of_user(starting_account, bf_lim=10, tweet_lim=100):
     top_ten_friends = mentions_counter.most_common(bf_lim)
     logging.warning(f'{top_ten_friends}')
     for user_name, _ in top_ten_friends:
-        account_mentions = get_mentions(user_name, tweet_lim)
+        account_mentions = get_mentions(api, user_name, tweet_lim)
         mentions_dict[user_name] = list(set(account_mentions))
 
     return mentions_dict
 
 
-def get_mentions(user_name, tweet_lim):
+def get_mentions(api, user_name, tweet_lim):
     user_friends = []
     for tweet in Cursor(api.user_timeline, id=user_name).items(tweet_lim):
         # if "user_mentions" in status.entities.keys():
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     import json
 
     api = auth()
-    mentions = get_mentions_of_user("kamilgorzynski", tweet_lim=100, bf_lim=10)
+    mentions = scrape_user("kamilgorzynski", tweet_lim=100, bf_lim=10)
     with open("mentions.json", "w") as f:
         json.dump(mentions, f, ensure_ascii=False, indent=4)
