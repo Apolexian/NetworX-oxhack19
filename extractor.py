@@ -22,5 +22,4 @@ def geo_get_users(api, n, geocode="40.68908,-73.95860,200km", lang="en", date_si
                 lang=lang,
                 since=date_since).items(10):
             users_names.add(tweet.user.screen_name)
-            logging.info("Got user: " + str(tweet.user.screen_name))
     return list(users_names)

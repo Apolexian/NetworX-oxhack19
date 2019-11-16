@@ -1,4 +1,4 @@
-import pandas as pd
+# import pandas as pd
 from tweepy import Cursor
 from tweepy.error import TweepError
 import extractor
@@ -7,11 +7,16 @@ import json
 import logging
 import traceback
 
+logging.basicConfig(
+    format="%(asctime)s.%(msecs)03d - %(module)s - %(levelname)s - %(message)s",
+    datefmt="%H:%M:%S",
+    level=logging.INFO,
+)
 
 api = extractor.auth()
 
 logging.warning(f"Geoget users")
-user_names = extractor.geo_get_users(api, 10)
+user_names = extractor.geo_get_users(api, 100)
 logging.warning(f"... user_names={user_names} ({len(user_names)})")
 for user in user_names:
     logging.warning(f"Scraping user {user}")
@@ -22,3 +27,4 @@ for user in user_names:
     except TweepError:
         traceback.print_exc()
         pass
+
