@@ -20,18 +20,16 @@ def get_Graph(tx):
     return users
 
 
-def set_pagerank_value(tx, nodes):
+def set_political_eng_value(tx, nodes):
     params = []
     for (user, value) in nodes:
         attr = {'name': user, 'value': value}
         params.append(attr)
+
+
     tx.run("UNWIND $nodes AS user "
            "MATCH (a:User {name: user.name}) "
-           "MATCH (a)<--(n)"
-           "WITH user, a, COUNT(n) AS degree "
-           "SET a.centrality_degree = user.value, "
-           "a.in_degree = degree", nodes=params)
-
+           "SET a.political_engagement = user.value ", nodes=params)
 
 def get_data():
     with driver.session() as session:
@@ -50,7 +48,7 @@ def calculated_pagerank(users):
 
 def upload_political_eng(political_eng):
     index = 0
-    list_nodes = [(k, v) for k, v in nx.pagerank.items()][index:NEO4J_CHUNK]
+    list_nodes = [(k, v) for k, v in political_eng.items()][index:NEO4J_CHUNK]
 
     while len(list_nodes) > 0:
         with driver.session() as session:
@@ -63,13 +61,13 @@ def upload_political_eng(political_eng):
 def main():
     users = get_data()
     pagerank = calculated_pagerank(users)
-    print(pagerank)
+    #print(pagerank)
     api = extractor.auth()
-    # first_users = list(pagerank[:100].keys())
-    # print(first_users)
-    # political_eng_list = political_eng_converter.extract_account_engagement(first_users,api)
-    # print(political_eng_list)
-    # upload_political_eng(pagerank[:100])
+    first_users = list(pagerank[:100].keys())
+    #print(first_users)
+    political_eng_list = political_eng_converter.extract_account_engagement(first_users,api)
+    #print(political_eng_list)
+    upload_political_eng(political_eng_list)
     # print(list(nx.dominating_set(G))[0])
 
 
