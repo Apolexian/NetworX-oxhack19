@@ -1,2 +1,2 @@
 run:
-	python3 scraper.py
+	python3 -m scraper.scrape
