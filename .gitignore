@@ -198,3 +198,4 @@ user_followers.json
 .vscode/
 mentions.json
 scrape/
+neo4j-data/
