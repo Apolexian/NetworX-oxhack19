@@ -10,3 +10,6 @@ services:
                 image: oxhack-visual
                 ports:
                         - "8080:80"
+
+        neo4j:
+                image: "neo4j:3.5.9"
