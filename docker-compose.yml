@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+        scraper:
+                image: oxhack-scraper
+                volumes:
+                        - "./scrape:/home/ubuntu2/oxhack/scrape"
+
+        visual:
+                build: visual/
+                image: oxhack-visual
+                ports:
+                        - "8080:80"

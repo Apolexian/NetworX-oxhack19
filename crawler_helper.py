@@ -7,11 +7,11 @@ def scrape_user(api, starting_account, bf_lim=10, tweet_lim=100):
     user_friends = get_mentions(api, starting_account, tweet_lim)
 
     mentions_dict = {starting_account: list(set(user_friends))}
-    logging.warning(mentions_dict)
+    logging.info(f"mentions_dict={mentions_dict}")
 
     mentions_counter = Counter(user_friends)
     top_ten_friends = mentions_counter.most_common(bf_lim)
-    logging.warning(f'{top_ten_friends}')
+    logging.info(f"top_ten_friends={top_ten_friends}")
     for user_name, _ in top_ten_friends:
         account_mentions = get_mentions(api, user_name, tweet_lim)
         mentions_dict[user_name] = list(set(account_mentions))
