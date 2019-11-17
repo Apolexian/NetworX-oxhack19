@@ -30,7 +30,7 @@ def main():
                 for user, friends_list in datastore.items():
                     print(user)
                     session.write_transaction(add_user, user, friends_list)
-                    session.write_transaction(add_friend, user, datastore.keys())
+                    session.write_transaction(add_friend, user, list(datastore.keys()))
 
 if __name__ == "__main__":
     main()

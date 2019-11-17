@@ -17,8 +17,7 @@ var config = {
                     }
                 },
                 arrows: true,
-		initial_cypher:"MATCH (n) RETURN n LIMIT 10"
-                /*initial_cypher: "MATCH p=(u1:User)-[]-(u2:User) WHERE u1.in_degree > 10  RETURN p"*/
+                initial_cypher: "MATCH p=(u1:User)-[:MENTION]-(u2:User) RETURN p LIMIT 20"
             }
 
 var viz;
