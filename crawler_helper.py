@@ -1,6 +1,8 @@
-from tweepy import Cursor
-from collections import Counter
+import json
 import logging
+from collections import Counter
+
+from tweepy import Cursor
 
 
 def scrape_user(api, starting_account, bf_lim=10, tweet_lim=100):
@@ -24,12 +26,28 @@ def get_mentions(api, user_name, tweet_lim):
     # followers_count
     for tweet in Cursor(api.user_timeline, id=user_name).items(tweet_lim):
         # if "user_mentions" in status.entities.keys():
-        user_friends.extend([user["screen_name"] for user in tweet.entities["user_mentions"]])
+        user_friends.extend([user["screen_name"]
+                             for user in tweet.entities["user_mentions"]])
     return user_friends
 
 
+def geo_get_users(api, n, geocode="40.68908,-73.95860,200km", lang="en", date_since="2018-10-15"):
+    users_names = set()
+    for tweet in Cursor(
+        api.search,
+        geocode=geocode,
+        lang=lang,
+        since=date_since
+    ).items(1.2*n):
+        users_names.add(tweet.user.screen_name)
+        if len(users_names) >= n:
+            break
+
+    return list(users_names)
+
+
 if __name__ == "__main__":
-    from extractor import auth
+    from auth import auth
     import json
 
     api = auth()
