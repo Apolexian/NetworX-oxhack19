@@ -45,7 +45,7 @@ def calculated_pagerank(users):
 
 def upload_political_eng(political_eng):
     index = 0
-    list_nodes = [(k, v) for k, v in pagerank.items()][index:NEO4J_CHUNK]
+    list_nodes = [(k, v) for k, v in nx.pagerank.items()][index:NEO4J_CHUNK]
 
     while len(list_nodes) > 0:
         with driver.session() as session:
