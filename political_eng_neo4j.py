@@ -69,8 +69,7 @@ def main():
     # print(first_users)
     # political_eng_list = political_eng_converter.extract_account_engagement(first_users,api)
     # print(political_eng_list)
-    # upload_pagerank(pagerank[:100])
-    # upload_in_degree(in_degree)
+    # upload_political_eng(pagerank[:100])
     # print(list(nx.dominating_set(G))[0])
 
 
