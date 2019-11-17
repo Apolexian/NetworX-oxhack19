@@ -15,9 +15,7 @@ def intersection(lst1, lst2):
     return list(set(lst1) & set(lst2))
 
 
-
 def extract_account_engagement(accounts, api):
-
     political_terms = get_political_terms()
 
     engagement_output = {}
@@ -29,7 +27,6 @@ def extract_account_engagement(accounts, api):
         try:
 
             for status in Cursor(api.user_timeline, id=account).items(TWEET_LIMIT):
-
                 table = str.maketrans(dict.fromkeys(string.punctuation))
 
                 content = status.text.translate(table).split()
@@ -38,12 +35,10 @@ def extract_account_engagement(accounts, api):
 
                 terms_count += len(common_terms)
 
-            engagement_output[account] = terms_count/TWEET_LIMIT
+            engagement_output[account] = terms_count / TWEET_LIMIT
 
         except TweepError:
 
             continue
 
     return engagement_output
-
-
