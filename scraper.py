@@ -6,6 +6,8 @@ from crawler_helper import scrape_user
 import json
 import logging
 import traceback
+import uuid
+from graph_creation import driver, add_user
 
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d - %(module)s - %(levelname)s - %(message)s",
@@ -22,8 +24,11 @@ for user in user_names:
     logging.warning(f"Scraping user {user}")
     try:
         mentions_dict = scrape_user(api, user)
-        with open(f"scrape/scraped-{user}.json", "a") as f:
-            json.dump(mentions_dict, f, ensure_ascii=False, indent=4)
+        # add to neo4j
+        with driver.session() as s:
+            for name, friend_list in mentions_dict:
+                s.write_transaction(add_user, name, friend_list)
+                s.write_transaction(add_friend, name, mentions_dict.keys())
     except TweepError:
         traceback.print_exc()
         pass

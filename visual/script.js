@@ -5,13 +5,13 @@ var config = {
                 server_password: "neo4j",
                 labels: {
                     "User": {
-                        caption: "name",
-                        size: "in_degree",
-                        community: "community"
+                        caption: "name"
+                        /*size: "in_degree",
+                        community: "community"*/
                     }
                 },
                 relationships: {
-                    "FOLLOW": {
+                    "MENTION": {
                         thickness: 0.03,
                         caption: false
                     }

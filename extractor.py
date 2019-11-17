@@ -13,7 +13,7 @@ def auth():
     return api
 
 
-def geo_get_users(api, n, geocode="40.68908,-73.95860,200km", lang="en", date_since="2018-10-15"):
+def geo_get_users(api, n, geocode="27.964157,-82.452606,150km", lang="en", date_since="2018-10-15"):
     users_names = set()
     for tweet in tw.Cursor(
         api.search,
