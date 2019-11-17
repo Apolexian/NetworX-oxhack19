@@ -21,6 +21,7 @@ def scrape_user(api, starting_account, bf_lim=10, tweet_lim=100):
 
 def get_mentions(api, user_name, tweet_lim):
     user_friends = []
+    # followers_count
     for tweet in Cursor(api.user_timeline, id=user_name).items(tweet_lim):
         # if "user_mentions" in status.entities.keys():
         user_friends.extend([user["screen_name"] for user in tweet.entities["user_mentions"]])
@@ -32,6 +33,6 @@ if __name__ == "__main__":
     import json
 
     api = auth()
-    mentions = scrape_user("kamilgorzynski", tweet_lim=100, bf_lim=10)
+    mentions = scrape_user(api, "kamilgorzynski", tweet_lim=100, bf_lim=10)
     with open("mentions.json", "w") as f:
         json.dump(mentions, f, ensure_ascii=False, indent=4)
