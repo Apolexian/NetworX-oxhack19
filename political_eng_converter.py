@@ -1,5 +1,6 @@
 import string
 from tweepy import Cursor, TweepError
+import numpy as np
 
 TWEET_LIMIT = 100
 
@@ -26,7 +27,7 @@ def extract_account_engagement(accounts, api):
                 content = status.text.translate(table).split()
                 common_terms = intersection(political_terms, content)
                 terms_count += len(common_terms)
-            engagement_output[account] = terms_count/TWEET_LIMIT
+            engagement_output[account] = np.round(terms_count/TWEET_LIMIT, 3)
         except TweepError:
             continue
     return engagement_output
