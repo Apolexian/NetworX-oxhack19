@@ -6,9 +6,9 @@ import uuid
 from tweepy import Cursor
 from tweepy.error import TweepError
 
-import extractor
-from crawler_helper import scrape_user
-from graph_creation import add_friend, add_user, driver
+from .auth import auth
+from .crawler_helper import scrape_user, geo_get_users
+from .graph_creation import add_friend, add_user, driver
 
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d - %(module)s - %(levelname)s - %(message)s",
@@ -16,10 +16,10 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-api = extractor.auth()
+api = auth()
 
 logging.warning(f"Geoget users")
-user_names = extractor.geo_get_users(api, 100)
+user_names = geo_get_users(api, 100)
 logging.warning(f"... user_names={user_names} ({len(user_names)})")
 for user in user_names:
     logging.warning(f"Scraping user {user}")
