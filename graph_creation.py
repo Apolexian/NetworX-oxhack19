@@ -33,7 +33,7 @@ def main():
             with driver.session() as session:
                 for user, friends_list in datastore.items():
                     session.write_transaction(add_user, user, friends_list)
-                    session.write_transaction(add_friend, user, list(datastore.keys()))
+                    #session.write_transaction(add_friend, user, datastore.keys())
 
 if __name__ == "__main__":
     main()
