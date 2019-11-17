@@ -3,6 +3,7 @@
 ## table of contents
 - [table of contents](#table-of-contents)
 - [about](#about)
+- [Features:](#features)
   - [motivation](#motivation)
 - [getting started](#getting-started)
   - [requirements](#requirements)
@@ -11,7 +12,7 @@
 ## about
 `NetworkX` analyses the political affiliation of social network clusters on a subset of Twitter users from a specific geolocation _(default: Tampa, Florida, 150km radius)_. 
 
-Features:
+## Features:
 * investigate the change in political engagement
 * identify changes in political affiliation clusters
 * store the data in neo4j-database
@@ -28,7 +29,7 @@ Our idea came up in a conversation when we were wondering how we can identify an
 | python           | 3.7     |
 | neo4j            | 3.x     |
 | (docker)         | 19.03.x |
-| (docker-compose) | 19.03.x |
+| (docker-compose) | 1.24.x  |
 
 ### steps
 (coming soon... )
