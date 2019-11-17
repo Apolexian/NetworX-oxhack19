@@ -4,7 +4,7 @@ TWEET_LIMIT = 100
 
 
 def get_political_terms():
-    f = open('political_terms.txt', 'r')
+    f = open('data/political_terms.txt', 'r')
     terms = f.read().split("\n")
     f.close()
     return terms
