@@ -17,7 +17,7 @@ var config = {
                     }
                 },
                 arrows: true,
-                initial_cypher: "MATCH p=(u1:User)-[:METION]-(u2:User) RETURN p LIMIT 20"
+                initial_cypher: "MATCH p=(u1:User)-[:MENTION]->(u2:User) RETURN p LIMIT 15"
             }
 
 var viz;

@@ -27,9 +27,9 @@ for user in user_names:
         mentions_dict = scrape_user(api, user)
         # add to neo4j
         with driver.session() as s:
-            for name, friend_list in mentions_dict:
+            for name, friend_list in mentions_dict.items():
                 s.write_transaction(add_user, name, friend_list)
-                s.write_transaction(add_friend, name, mentions_dict.keys())
+                s.write_transaction(add_friend, name, list(mentions_dict.keys()))
     except TweepError:
         traceback.print_exc()
         pass
