@@ -1,13 +1,14 @@
-# import pandas as pd
-from tweepy import Cursor
-from tweepy.error import TweepError
-import extractor
-from crawler_helper import scrape_user
 import json
 import logging
 import traceback
 import uuid
-from graph_creation import driver, add_user
+
+from tweepy import Cursor
+from tweepy.error import TweepError
+
+import extractor
+from crawler_helper import scrape_user
+from graph_creation import add_friend, add_user, driver
 
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d - %(module)s - %(levelname)s - %(message)s",
@@ -32,4 +33,3 @@ for user in user_names:
     except TweepError:
         traceback.print_exc()
         pass
-
