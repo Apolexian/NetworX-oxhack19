@@ -8,7 +8,7 @@ def add_user(tx, name, friend_name):
            "WITH u1 "
            "UNWIND $friend AS friend "
            "MERGE (u2:User {name: friend}) "
-           "CREATE (u1)-[:FOLLOW]->(u2) ",
+           "CREATE (u1)<-[:METION]-(u2) ",
            name=name, friend=friend_name)
 
 with driver.session() as session:
