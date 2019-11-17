@@ -7,7 +7,7 @@ import json
 import logging
 import traceback
 import uuid
-from graph_creation import driver, add_user
+from graph_creation import driver, add_user, add_friend
 
 logging.basicConfig(
     format="%(asctime)s.%(msecs)03d - %(module)s - %(levelname)s - %(message)s",
@@ -26,9 +26,9 @@ for user in user_names:
         mentions_dict = scrape_user(api, user)
         # add to neo4j
         with driver.session() as s:
-            for name, friend_list in mentions_dict:
+            for name, friend_list in mentions_dict.items():
                 s.write_transaction(add_user, name, friend_list)
-                s.write_transaction(add_friend, name, mentions_dict.keys())
+                s.write_transaction(add_friend, name, list(mentions_dict.keys()))
     except TweepError:
         traceback.print_exc()
         pass
