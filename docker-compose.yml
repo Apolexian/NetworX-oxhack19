@@ -2,10 +2,8 @@ version: "3.7"
 
 services:
         scraper:
-                build: .
+                build: scraper/
                 image: oxhack-scraper
-                volumes:
-                        - "./scrape:/home/ubuntu2/oxhack/scrape"
 
         visual:
                 build: visual/
