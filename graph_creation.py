@@ -13,7 +13,7 @@ def add_user(tx, name, friend_list):
            "WITH u1 "
            "UNWIND $friend_list AS friend "
            "MERGE (u2:User {name: friend}) "
-           "CREATE (u1)<-[:METION]-(u2) ",
+           "CREATE (u1)<-[:MENTION]-(u2) ",
            name=name, friend_list=friend_list)
 
 def add_friend(tx, name, friend_list):
