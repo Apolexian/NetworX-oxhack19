@@ -192,3 +192,9 @@ dmypy.json
 .pyre/
 venv/
 creds.json
+user_tweets.json
+user_followers.json
+.python_packages
+.vscode/
+mentions.json
+scrape/
